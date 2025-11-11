@@ -21,6 +21,10 @@ app.use(express.urlencoded({
 app.use(express.static('public'));
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.send("StreamVerse Backend is Running Successfully on Render!");
+});
+
 // Routes import
 const userRouter = require('./routes/user.routes.js');
 const commentRouter = require('./routes/comment.routes.js');
