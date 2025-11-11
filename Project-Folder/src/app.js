@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*', // Allow your frontend URL
+  origin: [process.env.FRONTEND_URL, "https://stream-verse-bice.vercel.app", // ✅ your frontend URL
+    "http://localhost:5173"] || '*', // Allow your frontend URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
