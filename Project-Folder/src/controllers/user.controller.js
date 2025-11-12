@@ -1,13 +1,11 @@
 const asyncHandler = require('../utils/asyncHandler');
 const ApiError = require('../utils/ApiError.js');
 const User = require('../models/user.model.js');
-const Subscription = require('../models/subscription.model.js');
 const { uploadOnCloudinary, deleteFromCloudinary } = require('../utils/cloudinary.js');
 const ApiResponse = require('../utils/ApiResponse.js');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const path = require("path");
-const fs = require("fs");
+const path = require("path")
 
 const generateAccessAndRefreshToken = async(userId) => {
     try{
@@ -453,7 +451,7 @@ const getUserChannelProfile = asyncHandler( async (req, res) => {
             200,
             "User channel fetched successfully",
             {
-                user: channel[0],
+                user: channel[0]
             }
         ));
 });

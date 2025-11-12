@@ -5,27 +5,24 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 // ✅ Safe CORS setup for Render + Vercel
-app.use((req, res, next) => {
-  const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    "https://stream-verse-bice.vercel.app",
-    "http://localhost:5173",
-  ];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "https://stream-verse-bice.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:3000",
+];
 
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,PATCH");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // 🔥 allow cookies (needed for dashboard)
+}));
 
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
 
 // ✅ Body parsers
 app.use(express.json({ limit: "16kb" }));
