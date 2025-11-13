@@ -7,7 +7,7 @@
 
 ## 🔥 Live Demo (Backend)
 
-**🌐 Render URL:** [https://streamverse-xd5s.onrender.com](https://streamverse-xd5s.onrender.com)
+**🌐 Render URL:** [https://streamverse-xd5s.onrender.com/](https://streamverse-xd5s.onrender.com)
 
 ---
 
