@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const ffmpeg = require('fluent-ffmpeg');
 const { isValidObjectId } = mongoose;
 const Video = require('../models/video.model.js');
 const ApiResponse = require('../utils/ApiResponse.js');
 const ApiError = require('../utils/ApiError.js');
 const asyncHandler = require('../utils/asyncHandler.js');
+const { uploadOnCloudinary } = require('../utils/cloudinary.js');
 
 const getAllVideos = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10, query } = req.query;
@@ -43,36 +45,60 @@ const getAllVideos = asyncHandler(async (req, res) => {
         ));
 });
 
+const getVideoDuration = (filePath) => {
+    return new Promise((res, rej) => {
+        ffmpeg.ffprobe(filePath, (err, metadata) => {
+            if (err) return rej(err);
+            res(metadata.format.duration);
+        });
+    });
+};
+
 const publishAVideo = asyncHandler(async (req, res) => {
     const { title, description } = req.body;
 
-    if(!title || title.trim() === ""){
-        throw new ApiError(400, "Title is required");
+    // Validation
+    if (!title || !description) {
+        throw new ApiError(400, "Title and description are required");
     }
 
-    if(!req.files || req.files.video || req.files.thumbnail){
-        throw new ApiError(400, "Video and thumbnail are required");
+    if (!req.files || !req.files.videoFile || !req.files.thumbnail) {
+        throw new ApiError(400, "Video file and thumbnail are required");
     }
 
-    const videoFilePath = req.files.video[0].path;
-    const thumbnailFilePath = req.files.thumbnail[0].path;
+    // Local file paths
+    const localVideoPath = req.files.videoFile[0].path;
+    const localThumbnailPath = req.files.thumbnail[0].path;
 
+    // Get duration
+    const duration = await getVideoDuration(localVideoPath);
+
+    // Upload to cloudinary
+    const uploadedVideo = await uploadOnCloudinary(localVideoPath);
+    const uploadedThumbnail = await uploadOnCloudinary(localThumbnailPath);
+
+    if (!uploadedVideo?.url || !uploadedThumbnail?.url) {
+        throw new ApiError(500, "Failed to upload media to Cloudinary");
+    }
+
+    // Create DB entry
     const video = await Video.create({
+        videoFile: uploadedVideo.url,
+        thumbnail: uploadedThumbnail.url,
         title,
         description,
+        duration,
         owner: req.user._id,
-        video: videoFilePath,
-        thumbnail: thumbnailFilePath,
-        isPublished: true
+        isPublished: true,
     });
 
-    return res
-        .status(201)
-        .json(new ApiResponse(
+    return res.status(201).json(
+        new ApiResponse(
             201,
-            "Video published successfully",
-            { video }
-        ));
+            { video },
+            "Video published successfully"
+        )
+    );
 });
 
 const getVideoById = asyncHandler(async (req, res) => {
