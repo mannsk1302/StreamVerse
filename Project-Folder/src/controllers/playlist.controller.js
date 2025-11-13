@@ -17,7 +17,7 @@ const createPlaylist = asyncHandler(async (req, res) => {
     const playlist = await Playlist.create({
         name,
         description,
-        owner: userId,
+        owner: req.user._id,
         videos: []
     });
 
@@ -167,7 +167,7 @@ const deletePlaylist = asyncHandler(async (req, res) => {
 
 const updatePlaylist = asyncHandler(async (req, res) => {
     const { playlistId } = req.params;
-    const { name, description, videos } = req.body;
+    const { name, description } = req.body;
 
     if(!isValidObjectId(playlistId)){
         throw new ApiError(400, "Invalid Playlist ID");
@@ -179,7 +179,7 @@ const updatePlaylist = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Playlist not found");
     }
 
-    if(playlist.owner.toString() !== req.user._id.toString()){
+    if(!playlist.owner || playlist.owner.toString() !== req.user._id.toString()){
         throw new ApiError(403, "You do not have permission to edit this playlist");
     }
 
@@ -191,7 +191,7 @@ const updatePlaylist = asyncHandler(async (req, res) => {
         playlist.description = description;
     }
 
-    await Playlist.save();
+    await playlist.save();
 
     return res
         .status(200)

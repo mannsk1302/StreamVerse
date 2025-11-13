@@ -7,7 +7,7 @@ const asyncHandler = require('../utils/asyncHandler.js');
 
 const createTweet = asyncHandler(async (req, res) => {
     const { content } = req.body;
-    const { userId } = req.user._id;
+    const userId = req.user._id;
 
     if(!content || content.trim() === ""){
         throw new ApiError(400, "Tweet content is required");
@@ -73,6 +73,7 @@ const updateTweet = asyncHandler(async (req, res) => {
     }
 
     tweet.content = content;
+
     await tweet.save();
 
     return res
@@ -96,6 +97,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
     }
 
     const tweet = await Tweet.findById(tweetId);
+
     if(!tweet){
         throw new ApiError(404, "Tweet not found");
     }
@@ -104,7 +106,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
         throw new ApiError(403, "You are not authorized to delete this tweet");
     }
 
-    await tweet.findByIdAndDelete(tweetId);
+    await Tweet.findByIdAndDelete(tweetId);
 
     return res
         .status(200)

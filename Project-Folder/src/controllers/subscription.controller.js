@@ -8,7 +8,7 @@ const asyncHandler = require('../utils/asyncHandler.js');
 
 const toggleSubscription = asyncHandler(async (req, res) => {
     const { channelId } = req.params;
-    const { userId } = req.user._id;
+    const userId = req.user._id;
 
     if(!isValidObjectId(channelId)){
         throw new ApiError(400, "Invalid Channel ID");
@@ -75,7 +75,7 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
 });
 
 const getSubscribedChannels = asyncHandler(async (req, res) => {
-    const { userId } = req.params;
+    const userId = req.user._id;
 
     if(!isValidObjectId(userId)){
         throw new ApiError(400, "Invalid User ID");

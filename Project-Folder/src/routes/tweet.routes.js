@@ -17,7 +17,7 @@ router.route("/")
 router.route("/:userId")
     .get(verifyJWT, getUserTweets);
 
-router.route("/t/:tweetId")
+router.route("/tweet/:tweetId")
     .patch(verifyJWT, updateTweet)
     .delete(verifyJWT, deleteTweet);
 
