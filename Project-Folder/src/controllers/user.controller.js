@@ -1,11 +1,11 @@
-const asyncHandler = require('../utils/asyncHandler');
+const asyncHandler = require('../utils/AsyncHandler');
 const ApiError = require('../utils/ApiError.js');
 const User = require('../models/user.model.js');
 const { uploadOnCloudinary, deleteFromCloudinary } = require('../utils/cloudinary.js');
 const ApiResponse = require('../utils/ApiResponse.js');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const path = require("path")
+const path = require("path");
 
 const generateAccessAndRefreshToken = async(userId) => {
     try{
@@ -24,7 +24,7 @@ const generateAccessAndRefreshToken = async(userId) => {
 
 const registerUser = asyncHandler( async (req, res) => {
 
-    // get user details from frontend
+    // get user details from the frontend
     const { fullName, email, username, password } = req.body;
     // console.log("email: ", email);
 
@@ -35,7 +35,7 @@ const registerUser = asyncHandler( async (req, res) => {
         throw new ApiError(400, "User Details are required");
     }
 
-    // check if user already exist?: username, email
+    // check if user already exists?: username, email
     const existedUser = await User.findOne({
         $or: [{ email }, { username }]
     });

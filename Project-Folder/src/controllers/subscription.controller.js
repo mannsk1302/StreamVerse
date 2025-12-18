@@ -4,7 +4,7 @@ const Subscription = require('../models/subscription.model.js');
 const User = require('../models/user.model.js');
 const ApiResponse = require('../utils/ApiResponse.js');
 const ApiError = require('../utils/ApiError.js');
-const asyncHandler = require('../utils/asyncHandler.js');
+const asyncHandler = require('../utils/AsyncHandler.js');
 
 const toggleSubscription = asyncHandler(async (req, res) => {
     const { channelId } = req.params;

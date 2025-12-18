@@ -4,7 +4,7 @@ const { isValidObjectId } = mongoose;
 const Video = require('../models/video.model.js');
 const ApiResponse = require('../utils/ApiResponse.js');
 const ApiError = require('../utils/ApiError.js');
-const asyncHandler = require('../utils/asyncHandler.js');
+const asyncHandler = require('../utils/AsyncHandler.js');
 const { uploadOnCloudinary } = require('../utils/cloudinary.js');
 
 const getAllVideos = asyncHandler(async (req, res) => {

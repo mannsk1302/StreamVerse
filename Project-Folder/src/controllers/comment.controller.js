@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { isValidObjectId } = mongoose;
-const asyncHandler = require('../utils/asyncHandler.js');
+const asyncHandler = require('../utils/AsyncHandler.js');
 const ApiError = require('../utils/ApiError.js');
 const Comment = require('../models/comment.model.js');
 const ApiResponse = require('../utils/ApiResponse.js');

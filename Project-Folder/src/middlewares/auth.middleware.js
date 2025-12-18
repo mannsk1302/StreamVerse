@@ -1,4 +1,4 @@
-const asyncHandler = require('../utils/asyncHandler.js');
+const asyncHandler = require('../utils/AsyncHandler.js');
 const ApiError = require('../utils/ApiError.js');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model.js');

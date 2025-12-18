@@ -4,7 +4,7 @@ const Playlist = require('../models/playlist.model.js');
 const Video = require('../models/video.model.js');
 const ApiResponse = require('../utils/ApiResponse.js');
 const ApiError = require('../utils/ApiError.js');
-const asyncHandler = require('../utils/asyncHandler.js');
+const asyncHandler = require('../utils/AsyncHandler.js');
 
 const createPlaylist = asyncHandler(async (req, res) => {
     const { name, description, videos } = req.body;

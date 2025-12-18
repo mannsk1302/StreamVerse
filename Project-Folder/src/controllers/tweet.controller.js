@@ -3,7 +3,7 @@ const { isValidObjectId } = mongoose;
 const Tweet = require('../models/tweet.model.js');
 const ApiResponse = require('../utils/ApiResponse.js');
 const ApiError = require('../utils/ApiError.js');
-const asyncHandler = require('../utils/asyncHandler.js');
+const asyncHandler = require('../utils/AsyncHandler.js');
 
 const createTweet = asyncHandler(async (req, res) => {
     const { content } = req.body;

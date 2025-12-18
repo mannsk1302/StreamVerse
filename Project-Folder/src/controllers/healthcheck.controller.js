@@ -1,6 +1,6 @@
 const ApiError = require('../utils/ApiError.js');
 const ApiResponse = require('../utils/ApiResponse.js');
-const asyncHandler = require('../utils/asyncHandler.js');
+const asyncHandler = require('../utils/AsyncHandler.js');
 const mongoose = require("mongoose");
 
 const healthcheck = asyncHandler( async (req, res) => {
