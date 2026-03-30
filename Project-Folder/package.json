@@ -1,5 +1,5 @@
 {
-  "name": "5_project-beginning",
+  "name": "streamverse",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -12,7 +12,18 @@
     "Node",
     "Express",
     "Mongoose",
-    "MongoDB"
+    "MongoDB",
+    "JWT",
+    "Cloudinary",
+    "Multer",
+    "Fluent-FFmpeg",
+    "Bcrypt",
+    "Cookie-Parser",
+    "Cors",
+    "Dotenv",
+    "Jsonwebtoken",
+    "Aggregate-Paginate",
+    "REST APIs"
   ],
   "author": "Mann Gwal",
   "license": "ISC",
